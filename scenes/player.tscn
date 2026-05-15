@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://co333sm6q4bcu"]
+
+[ext_resource type="Script" uid="uid://4v4nfic51s8a" path="res://scripts/player.gd" id="1_onrkg"]
+[ext_resource type="PackedScene" uid="uid://dnpgk0ifxk0tq" path="res://scenes/bullet.tscn" id="2_dqkch"]
+[ext_resource type="Texture2D" uid="uid://d007u0rlg3epq" path="res://assets/icon.svg" id="2_i3pqv"]
+[ext_resource type="Shader" uid="uid://2byqjp1og84w" path="res://shaders/player.gdshader" id="2_qhqgy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
+shader = ExtResource("2_qhqgy")
+shader_parameter/player_color = Color(0.18200648, 0.5658974, 0.48809814, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hqtel"]
+
+[node name="player" type="CharacterBody2D" unique_id=87081397]
+script = ExtResource("1_onrkg")
+bullet_scene = ExtResource("2_dqkch")
+
+[node name="sprite" type="Sprite2D" parent="." unique_id=1953022840]
+material = SubResource("ShaderMaterial_dqkch")
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_i3pqv")
+
+[node name="hitbox" type="CollisionShape2D" parent="." unique_id=1011644341]
+scale = Vector2(4, 4)
+shape = SubResource("CircleShape2D_hqtel")
+
+[node name="indicator" type="Marker2D" parent="." unique_id=1824078601]
+position = Vector2(50, 0)
