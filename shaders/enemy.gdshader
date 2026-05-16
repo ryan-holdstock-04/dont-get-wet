@@ -9,10 +9,16 @@ void vertex() {
 }
 
 void fragment() {
-	vec4 prev = texture(TEXTURE,UV);
-	if(COLOR.a > 0.1){
-		COLOR = mix(prev, hurt_color, hurt_value);
+	// Called for every pixel the material is visible on.
+	if(COLOR.b < 0.5){
+		discard;
 	}
+	COLOR.r = 1.-COLOR.r;
+	COLOR.g = 1.-COLOR.g*.2;
+	//COLOR = player_color;
+	
+	vec4 prev = COLOR.rgba;
+	COLOR = mix(prev, hurt_color, hurt_value);
 }
 
 //void light() {

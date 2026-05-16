@@ -4,18 +4,25 @@
 [ext_resource type="Shader" uid="uid://c81ovejwp37vf" path="res://shaders/bullet.gdshader" id="1_v8qja"]
 [ext_resource type="Texture2D" uid="uid://d007u0rlg3epq" path="res://assets/icon.svg" id="2_t4vbm"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2b2rl"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5glv"]
+size = Vector2(128, 128)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b7duk"]
 shader = ExtResource("1_v8qja")
 shader_parameter/bullet_color = Color(1, 0.41407216, 0.4988948, 1)
 
-[node name="bullet" type="Area2D" unique_id=574201157]
+[node name="bullet" type="Area2D" unique_id=2040130493 groups=["player_bullet"]]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_l5glv")
 
-[node name="hitbox" type="CollisionShape2D" parent="." unique_id=425655504]
-shape = SubResource("CircleShape2D_2b2rl")
+[node name="hitbox" type="CollisionShape2D" parent="." unique_id=531819122]
+scale = Vector2(0.1, 0.1)
+shape = SubResource("RectangleShape2D_l5glv")
 
-[node name="sprite" type="Sprite2D" parent="." unique_id=1840905418]
+[node name="sprite" type="Sprite2D" parent="." unique_id=1156717856]
 material = SubResource("ShaderMaterial_b7duk")
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_t4vbm")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

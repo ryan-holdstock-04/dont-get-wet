@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://br2npbmh1pw7t"]
+
+[ext_resource type="Script" uid="uid://c2i7abmnegtx4" path="res://scripts/enemy.gd" id="1_4ra3w"]
+[ext_resource type="Texture2D" uid="uid://d007u0rlg3epq" path="res://assets/icon.svg" id="3_xwavj"]
+[ext_resource type="Shader" uid="uid://bkgw1fcqjqnd0" path="res://shaders/enemy.gdshader" id="4_nenq2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_md0e3"]
+shader = ExtResource("4_nenq2")
+shader_parameter/player_color = Color(0, 0, 0, 1)
+shader_parameter/active = false
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
+radius = 37.054016
+
+[sub_resource type="Animation" id="Animation_5uy6h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_4ra3w"]
+resource_name = "hit"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5uy6h"]
+_data = {
+&"RESET": SubResource("Animation_5uy6h"),
+&"hit": SubResource("Animation_4ra3w")
+}
+
+[node name="enemy" type="Area2D" unique_id=862842579]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_4ra3w")
+
+[node name="sprite" type="Sprite2D" parent="." unique_id=1844165140]
+material = SubResource("ShaderMaterial_md0e3")
+scale = Vector2(0.8671875, 0.8671875)
+texture = ExtResource("3_xwavj")
+
+[node name="hitbox" type="CollisionShape2D" parent="." unique_id=690966503]
+shape = SubResource("CircleShape2D_4ra3w")
+
+[node name="hurt_anim" type="AnimationPlayer" parent="." unique_id=1557351136]
+libraries/ = SubResource("AnimationLibrary_5uy6h")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

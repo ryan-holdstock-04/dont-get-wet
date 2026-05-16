@@ -1,0 +1,11 @@
+TODO:
+cooldown indicator for bullet and dash
+HP bar for player (and enemy?)
+limit player movement to sand
+add waves:
+  show enemies remaining in wave
+  show how long break waves last
+  increase enemy spawn speed/move speed
+  add power ups to break waves
+    attack speed, move speed, dash timer, damage
+  i-frames for player

@@ -1,8 +1,142 @@
 [gd_scene format=3 uid="uid://bnm10vexlk6u7"]
 
 [ext_resource type="PackedScene" uid="uid://co333sm6q4bcu" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://b7epnnaorpy3s" path="res://assets/background.png" id="1_sugp2"]
+[ext_resource type="PackedScene" uid="uid://br2npbmh1pw7t" path="res://scenes/enemy.tscn" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://bsmvjikgugvmq" path="res://assets/flowing-water.png" id="2_jyhfs"]
+[ext_resource type="Shader" uid="uid://bwyu1hwocgabh" path="res://shaders/water.gdshader" id="2_tbgi4"]
+[ext_resource type="Script" uid="uid://p1ac6t5d3dma" path="res://scripts/enemy_spawner.gd" id="5_tbgi4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tefeu"]
+shader = ExtResource("2_tbgi4")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbgi4"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(0, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tefeu"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(120, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6xl0"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(240, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tipki"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(360, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85g3d"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(480, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_choun"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(600, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ya4ey"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(720, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb6dy"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(840, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trceg"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(960, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8y0u"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(1080, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkv2x"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(1200, 0, 120, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbj1t"]
+atlas = ExtResource("2_jyhfs")
+region = Rect2(1320, 0, 120, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_muem4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbgi4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tefeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6xl0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tipki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85g3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_choun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ya4ey")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eb6dy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trceg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8y0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkv2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jbj1t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Node2D" type="Node2D" unique_id=679669249]
 
+[node name="sand" type="Sprite2D" parent="." unique_id=1431091851]
+position = Vector2(962, 363)
+texture = ExtResource("1_sugp2")
+
+[node name="water" type="AnimatedSprite2D" parent="." unique_id=2080618196]
+material = SubResource("ShaderMaterial_tefeu")
+position = Vector2(965.52936, 360.00003)
+scale = Vector2(10.588235, 10.588234)
+sprite_frames = SubResource("SpriteFrames_muem4")
+autoplay = "default"
+frame = 5
+frame_progress = 0.9590769
+
 [node name="player" parent="." unique_id=87081397 instance=ExtResource("1_o5qli")]
 position = Vector2(134, 91)
+
+[node name="player_camera" type="Camera2D" parent="player" unique_id=325480418]
+enabled = false
+zoom = Vector2(1.32, 1.32)
+limit_left = 0
+limit_top = 0
+limit_right = 1280
+limit_bottom = 720
+limit_smoothed = true
+position_smoothing_enabled = true
+
+[node name="enemy_spawner" type="Node2D" parent="." unique_id=652235186]
+script = ExtResource("5_tbgi4")
+enemy_scene = ExtResource("2_0wfyh")
+
+[node name="spawn_timer" type="Timer" parent="enemy_spawner" unique_id=274445333]
+wait_time = 4.0
+autostart = true
+
+[connection signal="timeout" from="enemy_spawner/spawn_timer" to="player" method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="enemy_spawner/spawn_timer" to="enemy_spawner" method="_on_spawn_timer_timeout"]

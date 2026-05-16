@@ -1,8 +1,9 @@
 extends Area2D
 
 @onready var direction = [0,0]
+@onready var sprite = $sprite
 
-@export var bullet_speed = 500
+@export var bullet_speed = 750
 var x_angular_scalar
 var y_angular_scalar
 var x_velocity
@@ -13,6 +14,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _process(delta: float) -> void:
+	
 	var x_velocity = direction[0] * bullet_speed * delta
 	var y_velocity = direction[1] * bullet_speed * delta
 
@@ -25,15 +27,22 @@ func _process(delta: float) -> void:
 
 	position.x += x_velocity
 	position.y += y_velocity
+	
+	_free()
+
+# causes the bullet to bounce of the walls
+func bouncing():
 	if(position.x > 1280 || position.x < 0):
-		if(direction[0] > 0):
-			direction[0] = 1-direction[0]
-		elif(direction[0] < 0):
-			direction[0] = -1+direction[0]
+		direction[0] = -direction[0]
 	elif(position.y > 720 || position.y < 0):
-		if(direction[1] < 0):
-			direction[1] = 1-direction[0]
-		elif(direction[1] > 0):
-			direction[1] = -1+direction[0]
-	print(abs(direction[0]) + abs(direction[1]))
+		direction[1] = -direction[1]
+
+# deletes the bullet when it leaves the scene
+func _free():
+	if(position.x > 1280 || position.x < 0 || position.y > 720 || position.y < 0):
+		queue_free()
 		
+#bullets bounce of eachother (bugged, they get stuck together sometimes)
+#func _on_area_entered(area):
+	#direction[0] = -direction[0]
+	#direction[1] = -direction[1]

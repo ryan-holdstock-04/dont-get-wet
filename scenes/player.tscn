@@ -2,27 +2,169 @@
 
 [ext_resource type="Script" uid="uid://4v4nfic51s8a" path="res://scripts/player.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://dnpgk0ifxk0tq" path="res://scenes/bullet.tscn" id="2_dqkch"]
-[ext_resource type="Texture2D" uid="uid://d007u0rlg3epq" path="res://assets/icon.svg" id="2_i3pqv"]
-[ext_resource type="Shader" uid="uid://2byqjp1og84w" path="res://shaders/player.gdshader" id="2_qhqgy"]
+[ext_resource type="Shader" uid="uid://2byqjp1og84w" path="res://shaders/player.gdshader" id="3_dqkch"]
+[ext_resource type="Texture2D" uid="uid://bkocvd3jsvlao" path="res://assets/stupid-cat.png" id="3_qhqgy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
-shader = ExtResource("2_qhqgy")
-shader_parameter/player_color = Color(0.18200648, 0.5658974, 0.48809814, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
+resource_local_to_scene = true
+shader = ExtResource("3_dqkch")
+shader_parameter/player_color = Color(0, 0, 0, 1)
+shader_parameter/hurt_color = Color(1, 0.48610443, 0.41860744, 1)
+shader_parameter/hurt_value = 0.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hqtel"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(0, 0, 16, 16)
 
-[node name="player" type="CharacterBody2D" unique_id=87081397]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d2wvv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}],
+"loop": true,
+"name": &"side_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlg0r")
+}],
+"loop": true,
+"name": &"side_movement",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}],
+"loop": true,
+"name": &"top_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}],
+"loop": true,
+"name": &"top_movement",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3v2ag"]
+size = Vector2(10, 5.25)
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:material:shader_parameter/hurt_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+resource_name = "hit"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:material:shader_parameter/hurt_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuyoq"]
+_data = {
+&"RESET": SubResource("Animation_dqkch"),
+&"hit": SubResource("Animation_qlg0r")
+}
+
+[node name="player" type="CharacterBody2D" unique_id=87081397 groups=["player"]]
+safe_margin = 2.666
 script = ExtResource("1_onrkg")
 bullet_scene = ExtResource("2_dqkch")
 
-[node name="sprite" type="Sprite2D" parent="." unique_id=1953022840]
-material = SubResource("ShaderMaterial_dqkch")
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("2_i3pqv")
+[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1589459467]
+material = SubResource("ShaderMaterial_qlg0r")
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_d2wvv")
+animation = &"side_idle"
+autoplay = "side_idle"
+frame_progress = 0.8736513
 
 [node name="hitbox" type="CollisionShape2D" parent="." unique_id=1011644341]
-scale = Vector2(4, 4)
-shape = SubResource("CircleShape2D_hqtel")
+position = Vector2(-2, 0.5)
+scale = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_3v2ag")
 
 [node name="indicator" type="Marker2D" parent="." unique_id=1824078601]
 position = Vector2(50, 0)
+
+[node name="fire_timer" type="Timer" parent="." unique_id=1805554352]
+
+[node name="pounce_timer" type="Timer" parent="." unique_id=988479786]
+wait_time = 0.14
+one_shot = true
+
+[node name="can_pounce_timer" type="Timer" parent="." unique_id=903633695]
+wait_time = 3.0
+one_shot = true
+
+[node name="hurt_anim" type="AnimationPlayer" parent="." unique_id=683861710]
+libraries/ = SubResource("AnimationLibrary_tuyoq")
+
+[connection signal="timeout" from="fire_timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="pounce_timer" to="." method="_on_pounce_timer_timeout"]
+[connection signal="timeout" from="can_pounce_timer" to="." method="_on_can_pounce_timer_timeout"]
