@@ -3,6 +3,7 @@ extends Area2D
 @export var health = 100
 @export var speed = 120
 @onready var hurt_anim = $hurt_anim
+@onready var enemy_spawner = $"../enemy_spawner"
 func _ready():
 	pass
 	
@@ -10,7 +11,9 @@ func _physics_process(delta):
 	
 	# dies if hp < 0
 	if health <= 0:
+		enemy_spawner.enemy_count -= 1
 		queue_free()
+		
 	
 	# moves towards the player
 	var player = get_tree().get_nodes_in_group("player")

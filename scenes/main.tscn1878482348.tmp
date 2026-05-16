@@ -110,10 +110,12 @@ texture = ExtResource("1_sugp2")
 
 [node name="water" type="AnimatedSprite2D" parent="." unique_id=2080618196]
 material = SubResource("ShaderMaterial_tefeu")
-position = Vector2(975, 360)
+position = Vector2(965.52936, 360.00003)
 scale = Vector2(10.588235, 10.588234)
 sprite_frames = SubResource("SpriteFrames_muem4")
 autoplay = "default"
+frame = 1
+frame_progress = 0.61833864
 
 [node name="player" parent="." unique_id=87081397 instance=ExtResource("1_o5qli")]
 position = Vector2(134, 91)
@@ -135,10 +137,5 @@ enemy_scene = ExtResource("2_0wfyh")
 wait_time = 4.0
 autostart = true
 
-[node name="break_timer" type="Timer" parent="." unique_id=1997415273]
-wait_time = 10.0
-one_shot = true
-
 [connection signal="timeout" from="enemy_spawner/spawn_timer" to="player" method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="enemy_spawner/spawn_timer" to="enemy_spawner" method="_on_spawn_timer_timeout"]
-[connection signal="timeout" from="break_timer" to="enemy_spawner" method="_on_break_timer_timeout"]

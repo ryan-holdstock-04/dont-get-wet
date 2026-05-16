@@ -10,6 +10,7 @@ const speed = 300.0
 @export var fire_speed = 1.0
 @export var bullet_scene : PackedScene
 @onready var hurt_anim = $hurt_anim
+@export var shoreline = 475
 var mouse_norm
 var health = 100
 var can_fire = true
@@ -38,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("left","right","up","down")
 	velocity = direction.normalized() * speed
 	animate()
-	position.x = clamp(position.x,0 + 6*8,1280)
+	position.x = clamp(position.x,0 + 6*8,shoreline)
 	position.y = clamp(position.y,0 + 25,720-25)
 	if(pouncing == true):
 		velocity.x *= 5
