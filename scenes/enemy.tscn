@@ -1,21 +1,55 @@
 [gd_scene format=3 uid="uid://br2npbmh1pw7t"]
 
 [ext_resource type="Script" uid="uid://c2i7abmnegtx4" path="res://scripts/enemy.gd" id="1_4ra3w"]
-[ext_resource type="Texture2D" uid="uid://d007u0rlg3epq" path="res://assets/icon.svg" id="3_xwavj"]
+[ext_resource type="Texture2D" uid="uid://bb4ycs2bctv34" path="res://assets/crab.png" id="3_4ra3w"]
 [ext_resource type="Shader" uid="uid://bkgw1fcqjqnd0" path="res://shaders/enemy.gdshader" id="4_nenq2"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_md0e3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ra3w"]
 resource_local_to_scene = true
 shader = ExtResource("4_nenq2")
 shader_parameter/player_color = Color(0, 0, 0, 1)
-shader_parameter/hurt_color = Color(0.9205235, 0.33057895, 0.3495401, 1)
+shader_parameter/hurt_color = Color(1, 1, 1, 1)
 shader_parameter/hurt_value = 0.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_md0e3"]
+atlas = ExtResource("3_4ra3w")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ra3w"]
+atlas = ExtResource("3_4ra3w")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5uy6h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_md0e3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ra3w")
+}],
+"loop": true,
+"name": &"move",
+"speed": 4.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
-radius = 37.054016
+radius = 63.0
 
 [sub_resource type="Animation" id="Animation_5uy6h"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:material:shader_parameter/hurt_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_4ra3w"]
 resource_name = "hit"
@@ -44,10 +78,12 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_4ra3w")
 
-[node name="sprite" type="Sprite2D" parent="." unique_id=1844165140]
-material = SubResource("ShaderMaterial_md0e3")
-scale = Vector2(0.8671875, 0.8671875)
-texture = ExtResource("3_xwavj")
+[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1009542506]
+material = SubResource("ShaderMaterial_4ra3w")
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_5uy6h")
+animation = &"move"
+autoplay = "move"
 
 [node name="hitbox" type="CollisionShape2D" parent="." unique_id=690966503]
 shape = SubResource("CircleShape2D_4ra3w")
@@ -55,5 +91,11 @@ shape = SubResource("CircleShape2D_4ra3w")
 [node name="hurt_anim" type="AnimationPlayer" parent="." unique_id=1557351136]
 libraries/ = SubResource("AnimationLibrary_5uy6h")
 
+[node name="hurt_z" type="Timer" parent="." unique_id=1339314071]
+wait_time = 0.125
+one_shot = true
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="hurt_anim" to="." method="_on_hurt_anim_animation_finished"]
+[connection signal="timeout" from="hurt_z" to="." method="_on_hurt_z_timeout"]

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bckodoy6u0hf2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dfbal"]
+
+[node name="upgrade" type="Area2D" unique_id=1811914760]
+
+[node name="hitbox" type="CollisionShape2D" parent="." unique_id=688639386]
+shape = SubResource("CircleShape2D_dfbal")
+
+[node name="sprite" type="Sprite2D" parent="." unique_id=2012097545]

@@ -3,6 +3,7 @@ extends Area2D
 @export var health = 100
 @export var speed = 120
 @onready var hurt_anim = $hurt_anim
+@onready var hurt_z = $hurt_z
 @onready var enemy_spawner = $"../enemy_spawner"
 func _ready():
 	pass
@@ -40,6 +41,8 @@ func _on_area_entered(area):
 	# player bullets colliding with enemy
 	if(groups[0] == "player_bullet"):
 		hurt_anim.play("hit")
+		z_index = 2
+		hurt_z.start()
 		if(hurt_anim.is_animation_active()):
 			hurt_anim.stop()
 			hurt_anim.play()
@@ -54,3 +57,7 @@ func _on_body_entered(body):
 		body.health -= 20
 		body.hurt_anim.play("hit")
 		print("player")
+
+
+func _on_hurt_z_timeout():
+	z_index = 0

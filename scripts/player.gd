@@ -18,15 +18,12 @@ var pouncing = false
 var pounced = false
 var can_pounce = true
 
-func _ready():
-	fire_timer.wait_time = fire_speed
-
 func _input(event):
 	# bullet firing
+	fire_timer.wait_time = fire_speed
 	if event.is_action_pressed("click") and can_fire:
 		fire()
 		can_fire = false
-		fire_timer.wait_time = fire_speed
 		fire_timer.start()
 	if event.is_action_pressed("pounce") and can_pounce:
 		pouncing = true
@@ -39,6 +36,7 @@ func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("left","right","up","down")
 	velocity = direction.normalized() * speed
 	animate()
+	shoreline = clamp(shoreline, 0, 1280)
 	position.x = clamp(position.x,0 + 6*8,shoreline)
 	position.y = clamp(position.y,0 + 25,720-25)
 	if(pouncing == true):

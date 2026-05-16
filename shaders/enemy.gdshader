@@ -10,11 +10,11 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
-	if(COLOR.b < 0.5){
+	if(COLOR.a < 0.5){
 		discard;
 	}
-	COLOR.r = 1.-COLOR.r;
-	COLOR.g = 1.-COLOR.g*.2;
+	//COLOR.r = 1.-COLOR.r;
+	//COLOR.g = 1.-COLOR.g*.2;
 	//COLOR = player_color;
 	
 	vec4 prev = COLOR.rgba;

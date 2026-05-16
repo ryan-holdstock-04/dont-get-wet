@@ -1,12 +1,10 @@
 TODO:
 cooldown indicator for bullet and dash
 HP bar for player (and enemy?)
-limit player movement to sand
 add waves:
-  show enemies remaining in wave
-  show how long break waves last
-  increase enemy spawn speed/move speed
   add power ups to break waves
-    attack speed, move speed, dash timer, damage
+	attack speed, move speed, dash timer, damage
   i-frames for player
-sprites for enemies
+add jellyfish wave 2
+add boss wave 3
+text lerp into scene
