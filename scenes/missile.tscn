@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://d27od7bjsgv8a"]
+
+[ext_resource type="Script" uid="uid://clylyy81bmhyk" path="res://scripts/missile.gd" id="1_6cx5e"]
+[ext_resource type="Texture2D" uid="uid://du6s7vp8wqb2u" path="res://assets/missile_target.png" id="1_np454"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cx5e"]
+atlas = ExtResource("1_np454")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35udt"]
+atlas = ExtResource("1_np454")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2swxv"]
+atlas = ExtResource("1_np454")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bd00w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cx5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35udt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2swxv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_flxc2"]
+radius = 64.28063
+
+[node name="missile" type="Area2D" unique_id=294734991 groups=["missile"]]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_6cx5e")
+
+[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1725301840]
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_bd00w")
+frame = 2
+frame_progress = 0.82861197
+
+[node name="hitbox" type="CollisionShape2D" parent="." unique_id=547917260]
+shape = SubResource("CircleShape2D_flxc2")
+
+[node name="missile_timer" type="Timer" parent="." unique_id=484517551]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="missile_timer" to="." method="_on_missile_timer_timeout"]

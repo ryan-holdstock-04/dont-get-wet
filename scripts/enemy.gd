@@ -8,6 +8,8 @@ extends Area2D
 @onready var bounce_timer: Timer = $bounce_timer
 @onready var invert = 1
 @onready var health_bar: ProgressBar = $health_bar
+@onready var bullet_damage = 20
+@onready var missile_damage = 50
 
 func _ready():
 	pass
@@ -58,7 +60,16 @@ func _on_area_entered(area):
 			hurt_anim.stop()
 			hurt_anim.play()
 		area.queue_free()
-		health -= 20
+		health -= bullet_damage
+	elif(groups[0] == "missile"):
+		hurt_anim.play("hit")
+		z_index = 3
+		hurt_z.start()
+		if(hurt_anim.is_animation_active()):
+			hurt_anim.stop()
+			hurt_anim.play()
+		area.queue_free()
+		health -= missile_damage
 
 func _on_body_entered(body):
 	var groups = body.get_groups()

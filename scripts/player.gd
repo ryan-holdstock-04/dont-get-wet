@@ -11,6 +11,9 @@ const speed = 300.0
 @export var bullet_scene : PackedScene
 @onready var hurt_anim = $hurt_anim
 @export var shoreline = 475
+@onready var i_frames: Timer = $i_frames
+@onready var missile_timer: Timer = $missile_timer
+
 var mouse_norm
 var health = 100
 var max_health = 100
@@ -18,6 +21,7 @@ var can_fire = true
 var pouncing = false
 var pounced = false
 var can_pounce = true
+var can_missile = true
 
 func _input(event):
 	# bullet firing
@@ -30,6 +34,14 @@ func _input(event):
 		pouncing = true
 		can_pounce = false
 		can_pounce_timer.start()
+	if event.is_action_pressed("missile") and can_missile:
+		missile_timer.start()
+		can_missile = false
+		get_global_mouse_position()
+		# spawn missile at global mouse position
+		# LEAVING OFF HERE!!!
+		# Link up missile cooldown to the other cd tracker
+		# Add level unlocking of abilities
 
 func _physics_process(delta: float) -> void:
 	
@@ -43,10 +55,12 @@ func _physics_process(delta: float) -> void:
 	if(pouncing == true):
 		velocity.x *= 5
 		velocity.y *= 5
+		set_collision_layer_value(1, false)
+		set_collision_mask_value(1, false)
+		i_frames.start()
 		if(!pounced):
 			pounce_timer.start()
 			pounced = true
-
 	
 	# gets mouse direction and normalizes it
 	var mouse_mag = [get_global_mouse_position().x - position.x, get_global_mouse_position().y - position.y]
@@ -84,10 +98,15 @@ func _on_timer_timeout():
 	can_fire = true
 
 func _on_pounce_timer_timeout():
-	velocity.x *= (1/3)
-	velocity.y *= (1/3)
+	velocity.x *= (1/5)
+	velocity.y *= (1/5)
 	pounced = false
 	pouncing = false
 
 func _on_can_pounce_timer_timeout():
 	can_pounce = true
+
+
+func _on_i_frames_timeout() -> void:
+	set_collision_layer_value(1, true)
+	set_collision_mask_value(1, true)

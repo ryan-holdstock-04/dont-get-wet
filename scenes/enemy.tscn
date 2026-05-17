@@ -119,6 +119,8 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_5uy6h")
 value = 50.0
 show_percentage = false
 
+[node name="missile_timer" type="Timer" parent="." unique_id=1918815453]
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="hurt_anim" to="." method="_on_hurt_anim_animation_finished"]
