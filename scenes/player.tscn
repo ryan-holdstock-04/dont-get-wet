@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dnpgk0ifxk0tq" path="res://scenes/bullet.tscn" id="2_dqkch"]
 [ext_resource type="Shader" uid="uid://2byqjp1og84w" path="res://shaders/player.gdshader" id="3_dqkch"]
 [ext_resource type="Texture2D" uid="uid://bkocvd3jsvlao" path="res://assets/stupid-cat.png" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://d27od7bjsgv8a" path="res://scenes/missile.tscn" id="3_qlg0r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
 resource_local_to_scene = true
@@ -136,6 +137,7 @@ safe_margin = 2.666
 script = ExtResource("1_onrkg")
 fire_speed = 0.5
 bullet_scene = ExtResource("2_dqkch")
+missile_scene = ExtResource("3_qlg0r")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1589459467]
 material = SubResource("ShaderMaterial_qlg0r")
@@ -171,7 +173,12 @@ libraries/ = SubResource("AnimationLibrary_tuyoq")
 [node name="i_frames" type="Timer" parent="." unique_id=23088223]
 wait_time = 0.3
 
+[node name="missile_timer" type="Timer" parent="." unique_id=1214796159]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="timeout" from="fire_timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="pounce_timer" to="." method="_on_pounce_timer_timeout"]
 [connection signal="timeout" from="can_pounce_timer" to="." method="_on_can_pounce_timer_timeout"]
 [connection signal="timeout" from="i_frames" to="." method="_on_i_frames_timeout"]
+[connection signal="timeout" from="missile_timer" to="." method="_on_missile_timer_timeout"]

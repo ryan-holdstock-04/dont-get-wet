@@ -50,7 +50,7 @@ func _physics_process(delta):
 
 func _on_area_entered(area):
 	var groups = area.get_groups()
-	
+	print(groups)
 	# player bullets colliding with enemy
 	if(groups[0] == "player_bullet"):
 		hurt_anim.play("hit")
@@ -68,8 +68,8 @@ func _on_area_entered(area):
 		if(hurt_anim.is_animation_active()):
 			hurt_anim.stop()
 			hurt_anim.play()
-		area.queue_free()
 		health -= missile_damage
+		print("missile")
 
 func _on_body_entered(body):
 	var groups = body.get_groups()

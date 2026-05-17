@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://clylyy81bmhyk" path="res://scripts/missile.gd" id="1_6cx5e"]
 [ext_resource type="Texture2D" uid="uid://du6s7vp8wqb2u" path="res://assets/missile_target.png" id="1_np454"]
+[ext_resource type="Texture2D" uid="uid://c0jjr7taycfni" path="res://assets/explosion.png" id="3_35udt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6cx5e"]
 atlas = ExtResource("1_np454")
@@ -27,13 +28,42 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2swxv")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 3.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_flxc2"]
 radius = 64.28063
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bd00w"]
+atlas = ExtResource("3_35udt")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flxc2"]
+atlas = ExtResource("3_35udt")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fre4m"]
+atlas = ExtResource("3_35udt")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tnlbb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bd00w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flxc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fre4m")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="missile" type="Area2D" unique_id=294734991 groups=["missile"]]
 collision_layer = 0
@@ -43,13 +73,19 @@ script = ExtResource("1_6cx5e")
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1725301840]
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_bd00w")
-frame = 2
-frame_progress = 0.82861197
+autoplay = "default"
 
 [node name="hitbox" type="CollisionShape2D" parent="." unique_id=547917260]
 shape = SubResource("CircleShape2D_flxc2")
 
 [node name="missile_timer" type="Timer" parent="." unique_id=484517551]
+autostart = true
+
+[node name="explosion_sprite" type="AnimatedSprite2D" parent="." unique_id=1354220266]
+visible = false
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_tnlbb")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="missile_timer" to="." method="_on_missile_timer_timeout"]
+[connection signal="animation_finished" from="explosion_sprite" to="." method="_on_explosion_sprite_animation_finished"]

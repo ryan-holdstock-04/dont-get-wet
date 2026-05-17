@@ -9,6 +9,7 @@ const speed = 300.0
 @onready var can_pounce_timer = $can_pounce_timer
 @export var fire_speed = 1.0
 @export var bullet_scene : PackedScene
+@export var missile_scene : PackedScene
 @onready var hurt_anim = $hurt_anim
 @export var shoreline = 475
 @onready var i_frames: Timer = $i_frames
@@ -22,6 +23,8 @@ var pouncing = false
 var pounced = false
 var can_pounce = true
 var can_missile = true
+var missile_wait = 5.0
+var pounce_wait = 3.0
 
 func _input(event):
 	# bullet firing
@@ -30,14 +33,18 @@ func _input(event):
 		fire()
 		can_fire = false
 		fire_timer.start()
+	can_pounce_timer.wait_time = pounce_wait
 	if event.is_action_pressed("pounce") and can_pounce:
 		pouncing = true
 		can_pounce = false
 		can_pounce_timer.start()
+	missile_timer.wait_time = missile_wait
 	if event.is_action_pressed("missile") and can_missile:
 		missile_timer.start()
 		can_missile = false
-		get_global_mouse_position()
+		var missile = missile_scene.instantiate()
+		owner.add_child(missile)
+		missile.position = get_global_mouse_position()
 		# spawn missile at global mouse position
 		# LEAVING OFF HERE!!!
 		# Link up missile cooldown to the other cd tracker
@@ -110,3 +117,7 @@ func _on_can_pounce_timer_timeout():
 func _on_i_frames_timeout() -> void:
 	set_collision_layer_value(1, true)
 	set_collision_mask_value(1, true)
+
+
+func _on_missile_timer_timeout() -> void:
+	can_missile = true
