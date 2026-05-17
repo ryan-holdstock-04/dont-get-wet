@@ -73,6 +73,17 @@ _data = {
 &"hit": SubResource("Animation_4ra3w")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ra3w"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5uy6h"]
+resource_local_to_scene = true
+bg_color = Color(7.2196126e-06, 0.8350796, 0.34867597, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="enemy" type="Area2D" unique_id=862842579 groups=["enemy"]]
 collision_layer = 3
 collision_mask = 3
@@ -97,6 +108,16 @@ one_shot = true
 
 [node name="bounce_timer" type="Timer" parent="." unique_id=2107634364]
 wait_time = 0.15
+
+[node name="health_bar" type="ProgressBar" parent="." unique_id=952494894]
+offset_left = -28.0
+offset_top = -34.0
+offset_right = 29.0
+offset_bottom = -26.0
+theme_override_styles/background = SubResource("StyleBoxFlat_4ra3w")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5uy6h")
+value = 50.0
+show_percentage = false
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

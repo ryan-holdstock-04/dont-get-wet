@@ -13,6 +13,7 @@ const speed = 300.0
 @export var shoreline = 475
 var mouse_norm
 var health = 100
+var max_health = 100
 var can_fire = true
 var pouncing = false
 var pounced = false

@@ -7,10 +7,19 @@ extends Area2D
 @onready var enemy_spawner = $"../enemy_spawner"
 @onready var bounce_timer: Timer = $bounce_timer
 @onready var invert = 1
+@onready var health_bar: ProgressBar = $health_bar
+
 func _ready():
 	pass
 	
 func _physics_process(delta):
+	
+	health_bar.value = health
+	var style_box: StyleBoxFlat = health_bar.get_theme_stylebox("fill")
+	if(health < 80 and health > 30):
+		style_box.bg_color = Color(255,206,0,255)
+	elif(health <= 30):
+		style_box.bg_color = Color(0.836, 0.0, 0.0, 1.0)
 	
 	# dies if hp < 0
 	if health <= 0:
@@ -43,7 +52,7 @@ func _on_area_entered(area):
 	# player bullets colliding with enemy
 	if(groups[0] == "player_bullet"):
 		hurt_anim.play("hit")
-		z_index = 2
+		z_index = 3
 		hurt_z.start()
 		if(hurt_anim.is_animation_active()):
 			hurt_anim.stop()

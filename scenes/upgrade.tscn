@@ -1,13 +1,141 @@
 [gd_scene format=3 uid="uid://bckodoy6u0hf2"]
 
 [ext_resource type="Script" uid="uid://b58refmrrvpeo" path="res://scripts/upgrade.gd" id="1_xsw34"]
+[ext_resource type="Texture2D" uid="uid://cenu52d51k7q5" path="res://assets/heal.png" id="2_b2g4b"]
+[ext_resource type="Texture2D" uid="uid://dgvbdwlbwu8ub" path="res://assets/ammo.png" id="3_g1npk"]
+[ext_resource type="Texture2D" uid="uid://tvusi27l5bsc" path="res://assets/target.png" id="4_346kr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dfbal"]
+radius = 23.021729
 
-[node name="upgrade" type="Area2D" unique_id=1811914760]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1npk"]
+atlas = ExtResource("2_b2g4b")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_346kr"]
+atlas = ExtResource("2_b2g4b")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00gwf"]
+atlas = ExtResource("2_b2g4b")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnjjj"]
+atlas = ExtResource("2_b2g4b")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i5kin"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1npk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_346kr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_00gwf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnjjj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5kin"]
+atlas = ExtResource("3_g1npk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b42rm"]
+atlas = ExtResource("3_g1npk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_px1y0"]
+atlas = ExtResource("3_g1npk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lix0g"]
+atlas = ExtResource("3_g1npk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wevuu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5kin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b42rm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_px1y0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lix0g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wevuu"]
+atlas = ExtResource("4_346kr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obk6m"]
+atlas = ExtResource("4_346kr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5aan"]
+atlas = ExtResource("4_346kr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rd1j"]
+atlas = ExtResource("4_346kr")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o0tui"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wevuu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obk6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5aan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rd1j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="upgrade" type="Area2D" unique_id=1811914760 groups=["upgrade"]]
 script = ExtResource("1_xsw34")
 
 [node name="hitbox" type="CollisionShape2D" parent="." unique_id=688639386]
 shape = SubResource("CircleShape2D_dfbal")
 
-[node name="sprite" type="Sprite2D" parent="." unique_id=2012097545]
+[node name="heal_sprite" type="AnimatedSprite2D" parent="." unique_id=1781180347]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_i5kin")
+autoplay = "default"
+frame_progress = 0.9925279
+
+[node name="ammo_sprite" type="AnimatedSprite2D" parent="." unique_id=643311603]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_wevuu")
+autoplay = "default"
+
+[node name="target_sprite" type="AnimatedSprite2D" parent="." unique_id=841731398]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_o0tui")
+autoplay = "default"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
