@@ -8,3 +8,5 @@ add waves:
 add jellyfish wave 2
 add boss wave 3
 text lerp into scene
+sfx
+enemy death explosion
