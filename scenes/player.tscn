@@ -155,6 +155,7 @@ position = Vector2(50, 0)
 
 [node name="fire_timer" type="Timer" parent="." unique_id=1805554352]
 wait_time = 0.5
+one_shot = true
 
 [node name="pounce_timer" type="Timer" parent="." unique_id=988479786]
 wait_time = 0.14

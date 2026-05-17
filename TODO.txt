@@ -1,9 +1,8 @@
 TODO:
-cooldown indicator for bullet and dash
-HP bar for player (and enemy?)
 add waves:
   add power ups to break waves
 	attack speed, move speed, dash timer, damage
+  unlock a new ability each day, starting with only shoot (LMB)
   i-frames for player
 add jellyfish wave 2
 add boss wave 3

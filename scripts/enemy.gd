@@ -5,6 +5,8 @@ extends Area2D
 @onready var hurt_anim = $hurt_anim
 @onready var hurt_z = $hurt_z
 @onready var enemy_spawner = $"../enemy_spawner"
+@onready var bounce_timer: Timer = $bounce_timer
+@onready var invert = 1
 func _ready():
 	pass
 	
@@ -22,8 +24,8 @@ func _physics_process(delta):
 	var mag = [direction[0] - position.x, direction[1] - position.y]
 	var total = abs(mag[0]) + abs(mag[1])
 	direction = [mag[0]/total, mag[1]/total]
-	var x_velocity = direction[0] * speed * delta
-	var y_velocity = direction[1] * speed * delta
+	var x_velocity = direction[0] * invert * speed * delta
+	var y_velocity = direction[1] * invert * speed * delta
 		
 	# accelerates the enemy based on diagonality
 	# makes speed look more consistent
@@ -54,10 +56,15 @@ func _on_body_entered(body):
 	
 	# enemy colliding with player
 	if(groups[0] == "player"):
-		body.health -= 20
+		body.health -= 10
 		body.hurt_anim.play("hit")
-		print("player")
+		bounce_timer.start()
+		invert = -5
 
 
 func _on_hurt_z_timeout():
 	z_index = 0
+
+
+func _on_bounce_timer_timeout() -> void:
+	invert = 1

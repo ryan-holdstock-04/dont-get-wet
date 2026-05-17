@@ -95,7 +95,11 @@ libraries/ = SubResource("AnimationLibrary_5uy6h")
 wait_time = 0.125
 one_shot = true
 
+[node name="bounce_timer" type="Timer" parent="." unique_id=2107634364]
+wait_time = 0.15
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="hurt_anim" to="." method="_on_hurt_anim_animation_finished"]
 [connection signal="timeout" from="hurt_z" to="." method="_on_hurt_z_timeout"]
+[connection signal="timeout" from="bounce_timer" to="." method="_on_bounce_timer_timeout"]

@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://bckodoy6u0hf2"]
 
+[ext_resource type="Script" uid="uid://b58refmrrvpeo" path="res://scripts/upgrade.gd" id="1_xsw34"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_dfbal"]
 
 [node name="upgrade" type="Area2D" unique_id=1811914760]
+script = ExtResource("1_xsw34")
 
 [node name="hitbox" type="CollisionShape2D" parent="." unique_id=688639386]
 shape = SubResource("CircleShape2D_dfbal")
