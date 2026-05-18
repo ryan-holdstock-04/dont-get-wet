@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c2i7abmnegtx4" path="res://scripts/enemy.gd" id="1_4ra3w"]
 [ext_resource type="Texture2D" uid="uid://bb4ycs2bctv34" path="res://assets/crab.png" id="3_4ra3w"]
+[ext_resource type="AudioStream" uid="uid://cw5x0smro405b" path="res://audio/explosion.wav" id="4_5uy6h"]
 [ext_resource type="Shader" uid="uid://bkgw1fcqjqnd0" path="res://shaders/enemy.gdshader" id="4_nenq2"]
+[ext_resource type="Texture2D" uid="uid://03uakpbovmn3" path="res://assets/dead_crab.png" id="5_c4w8v"]
+[ext_resource type="AudioStream" uid="uid://cd21twdvbcgrh" path="res://audio/crabhurt.wav" id="6_xwavj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ra3w"]
 resource_local_to_scene = true
@@ -121,8 +124,26 @@ show_percentage = false
 
 [node name="missile_timer" type="Timer" parent="." unique_id=1918815453]
 
+[node name="knockback_timer" type="Timer" parent="." unique_id=1850094141]
+wait_time = 0.1
+
+[node name="death_sound" type="AudioStreamPlayer" parent="." unique_id=2055569218]
+stream = ExtResource("4_5uy6h")
+volume_db = -14.515
+
+[node name="dead_sprite" type="Sprite2D" parent="." unique_id=1757689337]
+visible = false
+scale = Vector2(8, 8)
+texture = ExtResource("5_c4w8v")
+
+[node name="crab_hurt" type="AudioStreamPlayer" parent="." unique_id=2062541520]
+stream = ExtResource("6_xwavj")
+volume_db = -4.394
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="hurt_anim" to="." method="_on_hurt_anim_animation_finished"]
 [connection signal="timeout" from="hurt_z" to="." method="_on_hurt_z_timeout"]
 [connection signal="timeout" from="bounce_timer" to="." method="_on_bounce_timer_timeout"]
+[connection signal="timeout" from="knockback_timer" to="." method="_on_knockback_timer_timeout"]
+[connection signal="finished" from="death_sound" to="." method="_on_death_sound_finished"]

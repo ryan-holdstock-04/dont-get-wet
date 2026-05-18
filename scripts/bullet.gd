@@ -14,20 +14,22 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _process(delta: float) -> void:
-	
-	var x_velocity = direction[0] * bullet_speed * delta
-	var y_velocity = direction[1] * bullet_speed * delta
+	if direction != null:
+		var x_velocity = direction[0] * bullet_speed * delta
+		var y_velocity = direction[1] * bullet_speed * delta
 
-	# accelerates the bullet based on diagonality
-	# makes bullet speed look more consistent
-	var x_angular_scalar = abs(sin(direction[0]*PI))
-	var y_angular_scalar = abs(sin(direction[1]*PI))
-	x_velocity *= 1 + x_angular_scalar/3
-	y_velocity *= 1 + y_angular_scalar/3
+		# accelerates the bullet based on diagonality
+		# makes bullet speed look more consistent
+		var x_angular_scalar = abs(sin(direction[0]*PI))
+		var y_angular_scalar = abs(sin(direction[1]*PI))
+		x_velocity *= 1 + x_angular_scalar/3
+		y_velocity *= 1 + y_angular_scalar/3
 
-	position.x += x_velocity
-	position.y += y_velocity
-	
+		position.x += x_velocity
+		position.y += y_velocity
+	else:
+		queue_free()
+		
 	_free()
 
 # causes the bullet to bounce of the walls

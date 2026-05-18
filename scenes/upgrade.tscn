@@ -4,6 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cenu52d51k7q5" path="res://assets/heal.png" id="2_b2g4b"]
 [ext_resource type="Texture2D" uid="uid://dgvbdwlbwu8ub" path="res://assets/ammo.png" id="3_g1npk"]
 [ext_resource type="Texture2D" uid="uid://tvusi27l5bsc" path="res://assets/target.png" id="4_346kr"]
+[ext_resource type="Texture2D" uid="uid://byexu531x2obh" path="res://assets/speed.png" id="5_00gwf"]
+[ext_resource type="Texture2D" uid="uid://c0nxv2ru6p0jj" path="res://assets/pounce.png" id="6_i5kin"]
+[ext_resource type="Texture2D" uid="uid://c3nl8w4ixlvqm" path="res://assets/missile.png" id="7_b42rm"]
+[ext_resource type="AudioStream" uid="uid://cqng7qh80h0w6" path="res://audio/pickup.mp3" id="8_b42rm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dfbal"]
 radius = 23.021729
@@ -116,6 +120,114 @@ animations = [{
 "speed": 2.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0tui"]
+atlas = ExtResource("5_00gwf")
+region = Rect2(0, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7qc4"]
+atlas = ExtResource("5_00gwf")
+region = Rect2(16, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsk0j"]
+atlas = ExtResource("5_00gwf")
+region = Rect2(32, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cuak5"]
+atlas = ExtResource("5_00gwf")
+region = Rect2(48, 0, 16, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_63jwi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0tui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7qc4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsk0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cuak5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5w6y4"]
+atlas = ExtResource("7_b42rm")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ye0t"]
+atlas = ExtResource("7_b42rm")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gnsdw"]
+atlas = ExtResource("7_b42rm")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vojkl"]
+atlas = ExtResource("7_b42rm")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lnltt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5w6y4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ye0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gnsdw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vojkl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63jwi"]
+atlas = ExtResource("6_i5kin")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8p8u1"]
+atlas = ExtResource("6_i5kin")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wywit"]
+atlas = ExtResource("6_i5kin")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86u22"]
+atlas = ExtResource("6_i5kin")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oyvf5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63jwi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8p8u1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wywit")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86u22")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
 [node name="upgrade" type="Area2D" unique_id=1811914760 groups=["upgrade"]]
 script = ExtResource("1_xsw34")
 
@@ -138,4 +250,29 @@ scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_o0tui")
 autoplay = "default"
 
+[node name="speed_sprite" type="AnimatedSprite2D" parent="." unique_id=2073107407]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_63jwi")
+autoplay = "default"
+
+[node name="shrink_timer" type="Timer" parent="." unique_id=2036573349]
+wait_time = 0.2
+one_shot = true
+
+[node name="missile_sprite" type="AnimatedSprite2D" parent="." unique_id=1339116907]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_lnltt")
+autoplay = "default"
+
+[node name="dash_sprite" type="AnimatedSprite2D" parent="." unique_id=874273379]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_oyvf5")
+autoplay = "default"
+
+[node name="pickup_sound" type="AudioStreamPlayer" parent="." unique_id=2062729383]
+stream = ExtResource("8_b42rm")
+volume_db = -10.253
+pitch_scale = 1.31
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="shrink_timer" to="." method="_on_shrink_timer_timeout"]

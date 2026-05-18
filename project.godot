@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="project-G"
-run/main_scene="uid://bnm10vexlk6u7"
+run/main_scene="uid://8bohj7b3y4uq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://assets/icon.svg"
+
+[autoload]
+
+Bgm="*uid://bldaybp0f6i8w"
+Ocean="*uid://dtmyq72bl0op4"
 
 [display]
 
@@ -27,6 +32,7 @@ player_bullet=""
 player=""
 upgrade=""
 missile=""
+enemy_spawner=""
 
 [input]
 

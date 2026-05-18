@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dtmyq72bl0op4"]
+
+[ext_resource type="AudioStream" uid="uid://ci8xgteb41ew5" path="res://audio/ocean_waves.mp3" id="1_7i2eo"]
+
+[node name="ocean" type="AudioStreamPlayer" unique_id=217798235]
+stream = ExtResource("1_7i2eo")
+volume_db = -8.788
+autoplay = true

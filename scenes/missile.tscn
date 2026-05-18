@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://clylyy81bmhyk" path="res://scripts/missile.gd" id="1_6cx5e"]
 [ext_resource type="Texture2D" uid="uid://du6s7vp8wqb2u" path="res://assets/missile_target.png" id="1_np454"]
 [ext_resource type="Texture2D" uid="uid://c0jjr7taycfni" path="res://assets/explosion.png" id="3_35udt"]
+[ext_resource type="AudioStream" uid="uid://imahpecwcle7" path="res://audio/underwaterexplosion.mp3" id="4_2swxv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6cx5e"]
 atlas = ExtResource("1_np454")
@@ -79,6 +80,7 @@ autoplay = "default"
 shape = SubResource("CircleShape2D_flxc2")
 
 [node name="missile_timer" type="Timer" parent="." unique_id=484517551]
+one_shot = true
 autostart = true
 
 [node name="explosion_sprite" type="AnimatedSprite2D" parent="." unique_id=1354220266]
@@ -86,6 +88,11 @@ visible = false
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_tnlbb")
 
+[node name="explosion_sound" type="AudioStreamPlayer" parent="." unique_id=433419327]
+stream = ExtResource("4_2swxv")
+volume_db = -5.127
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="missile_timer" to="." method="_on_missile_timer_timeout"]
 [connection signal="animation_finished" from="explosion_sprite" to="." method="_on_explosion_sprite_animation_finished"]
+[connection signal="finished" from="explosion_sound" to="." method="_on_explosion_sound_finished"]

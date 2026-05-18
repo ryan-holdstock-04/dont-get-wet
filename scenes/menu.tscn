@@ -1,0 +1,230 @@
+[gd_scene format=3 uid="uid://8bohj7b3y4uq"]
+
+[ext_resource type="Script" uid="uid://cacuh54eqk6mu" path="res://scripts/menu.gd" id="1_con2f"]
+[ext_resource type="Texture2D" uid="uid://1w7ycitwomec" path="res://assets/title_screen.png" id="1_vjb58"]
+[ext_resource type="FontFile" uid="uid://btv5ov8ijo25c" path="res://assets/fonts/PixelPurl.ttf" id="2_con2f"]
+[ext_resource type="Texture2D" uid="uid://dcxgtivq5rmsj" path="res://assets/tutorial.png" id="4_mhnvy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhnvy"]
+atlas = ExtResource("1_vjb58")
+region = Rect2(0, 0, 128, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ytvr"]
+atlas = ExtResource("1_vjb58")
+region = Rect2(128, 0, 128, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3eks"]
+atlas = ExtResource("1_vjb58")
+region = Rect2(256, 0, 128, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v86rl"]
+atlas = ExtResource("1_vjb58")
+region = Rect2(384, 0, 128, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_13sgg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhnvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ytvr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3eks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v86rl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj5lg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mhnvy"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_con2f"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ytvr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3eks"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="menu" type="Node2D" unique_id=1969583153]
+script = ExtResource("1_con2f")
+
+[node name="background" type="AnimatedSprite2D" parent="." unique_id=1224286949]
+position = Vector2(640, 360)
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_13sgg")
+autoplay = "default"
+frame_progress = 0.7950283
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=413018168]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1312831714]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 550
+theme_override_constants/margin_top = 391
+theme_override_constants/margin_right = 550
+theme_override_constants/margin_bottom = 153
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer" unique_id=437241429]
+layout_mode = 2
+
+[node name="start_button" type="Button" parent="UI/MarginContainer/VBoxContainer" unique_id=390415040]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 0.8509804, 0.45490196, 1)
+theme_override_colors/font_hover_color = Color(1, 0.21973109, 0.33994558, 1)
+theme_override_fonts/font = ExtResource("2_con2f")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_mj5lg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mhnvy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_con2f")
+text = "Start"
+
+[node name="tutorial_button" type="Button" parent="UI/MarginContainer/VBoxContainer" unique_id=991129016]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 0.8509804, 0.45490196, 1)
+theme_override_colors/font_hover_color = Color(1, 0.21973109, 0.33994558, 1)
+theme_override_fonts/font = ExtResource("2_con2f")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_mj5lg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4ytvr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_con2f")
+text = "Tutorial"
+
+[node name="exit_button" type="Button" parent="UI/MarginContainer/VBoxContainer" unique_id=1051981987]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 0.8509804, 0.45490196, 1)
+theme_override_colors/font_hover_color = Color(1, 0.21973109, 0.33994558, 1)
+theme_override_fonts/font = ExtResource("2_con2f")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_mj5lg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g3eks")
+theme_override_styles/hover = SubResource("StyleBoxFlat_con2f")
+text = "Exit"
+
+[node name="tutorial" type="Sprite2D" parent="UI" unique_id=824833241]
+visible = false
+position = Vector2(640, 360)
+scale = Vector2(10, 10)
+texture = ExtResource("4_mhnvy")
+
+[node name="back_button" type="Button" parent="UI/tutorial" unique_id=1863953864]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -77.7
+offset_top = -43.8
+offset_right = -25.699997
+offset_bottom = -15.799999
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.2, 0.2)
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_colors/font_hover_color = Color(1, 0.21973109, 0.33994558, 1)
+theme_override_fonts/font = ExtResource("2_con2f")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_mj5lg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g3eks")
+theme_override_styles/hover = SubResource("StyleBoxFlat_con2f")
+text = "Back"
+
+[node name="tut1" type="RichTextLabel" parent="UI" unique_id=1014517176]
+visible = false
+offset_left = 550.0
+offset_top = 23.0
+offset_right = 849.0
+offset_bottom = 88.0
+theme_override_colors/default_color = Color(0.8352941, 0.9411765, 1, 1)
+theme_override_fonts/normal_font = ExtResource("2_con2f")
+theme_override_font_sizes/normal_font_size = 35
+text = "SHOOT THE CRABS!!!!"
+
+[node name="tut2" type="RichTextLabel" parent="UI" unique_id=1580194470]
+visible = false
+offset_left = 778.0
+offset_top = 482.0
+offset_right = 1152.0
+offset_bottom = 594.0
+theme_override_colors/default_color = Color(0.8352941, 0.9411765, 1, 1)
+theme_override_fonts/normal_font = ExtResource("2_con2f")
+theme_override_font_sizes/normal_font_size = 35
+text = "Deals AOE Damage after a short delay! Unlock the missile after Day 2!"
+
+[node name="tut3" type="RichTextLabel" parent="UI" unique_id=304128664]
+visible = false
+offset_left = 65.0
+offset_top = 539.0
+offset_right = 439.0
+offset_bottom = 651.0
+theme_override_colors/default_color = Color(0.8352941, 0.9411765, 1, 1)
+theme_override_fonts/normal_font = ExtResource("2_con2f")
+theme_override_font_sizes/normal_font_size = 35
+text = "Dashing gives you i-frames!"
+
+[node name="tut4" type="RichTextLabel" parent="UI" unique_id=1510167629]
+visible = false
+offset_left = 26.0
+offset_top = 23.0
+offset_right = 400.0
+offset_bottom = 135.0
+theme_override_colors/default_color = Color(0.8352941, 0.9411765, 1, 1)
+theme_override_fonts/normal_font = ExtResource("2_con2f")
+theme_override_font_sizes/normal_font_size = 35
+text = "The waves get closer after every wave and day..."
+
+[node name="tut5" type="RichTextLabel" parent="UI" unique_id=1922329456]
+visible = false
+offset_left = 550.0
+offset_top = 180.0
+offset_right = 769.0
+offset_bottom = 382.0
+theme_override_colors/default_color = Color(0.8352941, 0.9411765, 1, 1)
+theme_override_fonts/normal_font = ExtResource("2_con2f")
+theme_override_font_sizes/normal_font_size = 35
+text = "Grab upgrades left on the shore between the tides and defend your home from the CRABS!"
+
+[node name="tut6" type="RichTextLabel" parent="UI" unique_id=1962396024]
+visible = false
+offset_left = 1031.0
+offset_top = 23.0
+offset_right = 1298.0
+offset_bottom = 177.0
+theme_override_colors/default_color = Color(0.8352941, 0.9411765, 1, 1)
+theme_override_fonts/normal_font = ExtResource("2_con2f")
+theme_override_font_sizes/normal_font_size = 35
+text = "uhhhh why can a 1 pixel wide cat shoort bullets and launch missiles 🤓☝"
+
+[node name="tut7" type="RichTextLabel" parent="UI" unique_id=2049059066]
+visible = false
+offset_left = 141.0
+offset_top = 418.0
+offset_right = 632.0
+offset_bottom = 572.0
+theme_override_colors/default_color = Color(0.8352941, 0.9411765, 1, 1)
+theme_override_fonts/normal_font = ExtResource("2_con2f")
+theme_override_font_sizes/normal_font_size = 35
+text = "Survive 5 days and the CRABS said they'll leave you alone!!"
+
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/start_button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/tutorial_button" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="UI/tutorial/back_button" to="." method="_on_back_button_pressed"]

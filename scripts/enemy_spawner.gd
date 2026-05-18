@@ -10,16 +10,19 @@ extends Node2D
 @onready var break_timer_text = $"../ui/break_timer_text"
 @onready var player_boundary = $player_boundary
 @onready var upgrade_timer: Timer = $upgrade_timer
+@onready var daylight_player = $"../ui/daylight_player"
+var daylight_played = false
+var damage_ups = 0
 var enemy_base_speed = 60
 var enemy_base_health = 100
 var enemy
 var upgrade
 var wave = "wave_1"
-var enemy_count = 8
-var spawn_enemies = 8
-var wave1_enemies = 8
-var wave2_enemies = 12
-var wave3_enemies = 16
+var enemy_count = 4
+var spawn_enemies = 4
+var wave1_enemies = 4
+var wave2_enemies = 6
+var wave3_enemies = 8
 var break_line = 975
 var break_water = 1500
 var day = 0
@@ -37,6 +40,8 @@ var wave3_water = 800
 var water_position = 975
 var t = 0.0
 var GONEXT = false
+var damage_mult = 0
+var leveledup = false
 
 func move_water(old_shore, new_shore, new_limit, old_water, new_water, delta):
 	old_shore = old_shore - day * 50
@@ -53,13 +58,24 @@ func _physics_process(delta):
 	player_boundary.set_point_position(0, Vector2(player.shoreline, 0))
 	player_boundary.set_point_position(1, Vector2(player.shoreline, 720))
 	day_text.text = "Day: " + str(day+1)
+	if enemy != null:
+		enemy.max_health = enemy_base_health
+	if day > -1:
+		player.pounce_unlocked = true
+	if day > 0 and !leveledup:
+		player.missile_unlocked = true
+		leveledup = true
+		player.levelup_sound.play()
+	if day == 5:
+		get_tree().change_scene_to_file('res://scenes/win.tscn')
 	match wave:
 		"wave_1":
+			daylight_played = false
 			spawn_timer.wait_time = 3.0 - 0.5 * day
 			#spawn_enemies = wave1_enemies MOVE THIS TO BREAK 3 EXPIRING
 			break_timer_text.text = "Enemies Left: " + str(enemy_count)
-			enemy_base_speed = 60 + 20 * day
-			enemy_base_health = 100 + 20 * day
+			enemy_base_speed = 60 + 5 * day
+			enemy_base_health = 100 + 5 * day
 			move_water(new_day_shore, wave1_line, wave1_limit, new_day_water, wave1_water, delta)
 			if(enemy_count == 0):
 				spawn_timer.stop()
@@ -81,9 +97,9 @@ func _physics_process(delta):
 				upgrade_timer.start()
 				t = 0
 		"wave_2":
-			enemy_base_health = 120 + 20 * day
+			enemy_base_health = 100 + 10 * day
 			spawn_timer.wait_time = 2.5 - 0.5 * day
-			enemy_base_speed = 70 + 20 * day
+			enemy_base_speed = 70 + 5 * day
 			break_timer_text.text = "Enemies Left: " + str(enemy_count)
 			move_water(break_line, wave2_line, wave2_limit, break_water, wave2_water, delta)
 			if(enemy_count == 0):
@@ -108,8 +124,8 @@ func _physics_process(delta):
 			pass
 		"wave_3":
 			spawn_timer.wait_time = 2.0 - 0.5 * day
-			enemy_base_speed = 80 + 20 * day
-			enemy_base_health = 140 + 20 * day
+			enemy_base_speed = 80 + 10 * day
+			enemy_base_health = 100 + 20 * day
 			break_timer_text.text = "Enemies Left: " + str(enemy_count)
 			move_water(break_line, wave3_line, wave3_limit, break_water, wave3_water, delta)
 			if(enemy_count == 0):
@@ -117,12 +133,16 @@ func _physics_process(delta):
 				upgrade_timer.stop()
 				wave = "break_3"
 				t = 0
+				day += 1
 			pass
 		"break_3":
 			move_water(wave3_line, new_day_water, new_day_shore, wave3_water, new_day_water, delta)
 			if(break_timer.is_stopped() and !GONEXT):
 				break_timer.start()
 			break_timer_text.text = "Next Wave: " + str(int(break_timer.time_left))
+			if(!daylight_player.is_playing() and !daylight_played):
+				daylight_player.play("daylight")
+				daylight_played = true
 			if(GONEXT):
 				wave = "wave_1"
 				GONEXT = false
@@ -131,7 +151,9 @@ func _physics_process(delta):
 				spawn_timer.start()
 				upgrade_timer.start()
 				t = 0
-				day += 1
+				wave1_enemies = wave1_enemies + (day+1) * 4
+				wave2_enemies = wave2_enemies + (day+1) * 6
+				wave3_enemies = wave3_enemies + (day+1) * 8
 			pass
 			
 func _on_spawn_timer_timeout():
@@ -142,18 +164,20 @@ func _on_spawn_timer_timeout():
 		enemy.position.y = randi() % 721
 		enemy.speed = randi() % 100 + enemy_base_speed
 		spawn_enemies -= 1
+		enemy.health = enemy_base_health
 		enemy.health_bar.max_value = enemy_base_health
+		enemy.damage_mult = 2.5 * damage_ups
 
 func upgrades():
-	var upgrades = ["attack_speed", "heal", "attack_damage", "dash_timer", "rocket_timer"]
+	var upgrades = ["attack_speed", "heal", "attack_damage", "speed", "dash_timer", "rocket_timer"]
 	var rand : int
 	var pos : int
 	if(day == 0):
-		rand = randi() % 3
-	elif(day == 1):
 		rand = randi() % 4
-	elif(day >= 2):
+	elif(day == 1):
 		rand = randi() % 5
+	elif(day >= 2):
+		rand = randi() % 6
 	if(wave == "wave_1"):
 		pos = wave1_line+100
 	elif(wave == "wave_2"):
@@ -167,23 +191,52 @@ func upgrades():
 	upgrade.up_type = upgrades[rand]
 	var num = (randi() % (break_line-pos)) + pos
 	upgrade.position.x = num
-	upgrade.position.y = randi() % 721
+	upgrade.position.y = randi() % 621 + 50
 	if(upgrade.up_type == "attack_speed"):
 		upgrade.target_sprite.visible = false
 		upgrade.ammo_sprite.visible = true
 		upgrade.heal_sprite.visible = false
+		upgrade.speed_sprite.visible = false
+		upgrade.dash_sprite.visible = false
+		upgrade.missile_sprite.visible = false
 	elif(upgrade.up_type == "attack_damage"):
 		upgrade.target_sprite.visible = true
 		upgrade.ammo_sprite.visible = false
 		upgrade.heal_sprite.visible = false
+		upgrade.speed_sprite.visible = false
+		upgrade.dash_sprite.visible = false
+		upgrade.missile_sprite.visible = false
 	elif(upgrade.up_type == "heal"):
 		upgrade.target_sprite.visible = false
 		upgrade.ammo_sprite.visible = false
 		upgrade.heal_sprite.visible = true
+		upgrade.speed_sprite.visible = false
+		upgrade.dash_sprite.visible = false
+		upgrade.missile_sprite.visible = false
+	elif(upgrade.up_type == "speed"):
+		upgrade.target_sprite.visible = false
+		upgrade.ammo_sprite.visible = false
+		upgrade.heal_sprite.visible = false
+		upgrade.speed_sprite.visible = true
+		upgrade.dash_sprite.visible = false
+		upgrade.missile_sprite.visible = false
+	elif(upgrade.up_type == "dash_timer"):
+		upgrade.target_sprite.visible = false
+		upgrade.ammo_sprite.visible = false
+		upgrade.heal_sprite.visible = false
+		upgrade.speed_sprite.visible = false
+		upgrade.dash_sprite.visible = true
+		upgrade.missile_sprite.visible = false
+	elif(upgrade.up_type == "rocket_timer"):
+		upgrade.target_sprite.visible = false
+		upgrade.ammo_sprite.visible = false
+		upgrade.heal_sprite.visible = false
+		upgrade.speed_sprite.visible = false
+		upgrade.dash_sprite.visible = false
+		upgrade.missile_sprite.visible = true
 
 func _on_break_timer_timeout():
 	GONEXT = true
-
 
 func _on_upgrade_timer_timeout() -> void:
 	upgrades()

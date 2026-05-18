@@ -10,6 +10,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	value = player.health
+	max_value = player.max_health
 	var style_box: StyleBoxFlat = get_theme_stylebox("fill")
-	if(value < 100):
+	if(value < max_value):
 		style_box.border_width_right = 0

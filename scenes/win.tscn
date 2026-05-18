@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bblkhjxtdmst8"]
+
+[ext_resource type="Script" uid="uid://cc6h83hpysnki" path="res://scripts/win.gd" id="1_826fv"]
+[ext_resource type="FontFile" uid="uid://btv5ov8ijo25c" path="res://assets/fonts/PixelPurl.ttf" id="2_iiocm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxbqr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tylv2"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vxan"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Node2D" type="Node2D" unique_id=1261415308]
+script = ExtResource("1_826fv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1055413229]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=480709082]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1.4138408e-07, 0.07418617, 0.11667115, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1561472556]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 400
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 400
+theme_override_constants/margin_bottom = 150
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer" unique_id=2022042866]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=1006801184]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.07533953, 1.1758162, 0.52496207, 1)
+theme_override_fonts/normal_font = ExtResource("2_iiocm")
+theme_override_font_sizes/normal_font_size = 72
+text = "YOU WIN!!!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer" unique_id=1749059630]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 0.8509804, 0.45490196, 1)
+theme_override_colors/font_hover_color = Color(1, 0.21973109, 0.33994558, 1)
+theme_override_fonts/font = ExtResource("2_iiocm")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_yxbqr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tylv2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5vxan")
+text = "Main Menu"
+
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Button2" to="." method="_on_button_2_pressed"]

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bldaybp0f6i8w"]
+
+[ext_resource type="AudioStream" uid="uid://cb3hko6kauio2" path="res://audio/game-song.wav" id="1_q5y64"]
+
+[node name="BGM" type="AudioStreamPlayer" unique_id=532837536]
+stream = ExtResource("1_q5y64")
+volume_db = -10.015
+pitch_scale = 1.5
+autoplay = true
