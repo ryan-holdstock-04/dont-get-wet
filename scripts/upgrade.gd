@@ -33,12 +33,12 @@ func _on_body_entered(body: Node2D) -> void:
 		picked_up = true
 		match(up_type):
 			"attack_speed":
-				body.fire_speed -= 0.1
+				body.fire_speed -= 0.075
 				shrink = true
 				shrink_timer.start()
 			"heal":
-				body.health += 20
-				body.max_health += 10
+				body.health += 10
+				body.max_health += 5
 				shrink = true
 				shrink_timer.start()
 			"attack_damage":

@@ -24,6 +24,7 @@ Ocean="*uid://dtmyq72bl0op4"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="viewport"
 
 [global_group]
 

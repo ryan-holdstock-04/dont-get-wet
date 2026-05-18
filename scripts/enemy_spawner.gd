@@ -26,7 +26,7 @@ var wave3_enemies = 8
 var break_line = 975
 var break_water = 1500
 var day = 0
-var new_day_water = 1875
+var new_day_water = 2000
 var new_day_shore = 1280
 var wave1_line = 475
 var wave1_limit = 100
@@ -44,8 +44,16 @@ var damage_mult = 0
 var leveledup = false
 
 func move_water(old_shore, new_shore, new_limit, old_water, new_water, delta):
-	old_shore = old_shore - day * 50
-	new_shore = new_shore - day * 50
+	if(new_water == new_day_water):
+		pass
+	else:
+		pass
+	if(new_shore == break_line):
+		pass
+	else:
+		new_shore = new_shore - day * 50
+		new_water = new_water - day * 50
+		
 	player.shoreline = clamp(player.shoreline, new_limit, new_shore)
 	t += delta * .5
 	var new_t = (1 - cos(PI * t)) / 2
@@ -54,6 +62,8 @@ func move_water(old_shore, new_shore, new_limit, old_water, new_water, delta):
 	t = clamp(t, 0, 1)
 	
 func _physics_process(delta):
+	print(player.shoreline)
+	player.pounce_wait = clamp(player.pounce_wait, 0.5, 3.0)
 	player.shoreline = clamp(player.shoreline, 0, 1280)
 	player_boundary.set_point_position(0, Vector2(player.shoreline, 0))
 	player_boundary.set_point_position(1, Vector2(player.shoreline, 720))
@@ -65,7 +75,6 @@ func _physics_process(delta):
 	if day > 0 and !leveledup:
 		player.missile_unlocked = true
 		leveledup = true
-		player.levelup_sound.play()
 	if day == 5:
 		get_tree().change_scene_to_file('res://scenes/win.tscn')
 	match wave:
@@ -75,7 +84,7 @@ func _physics_process(delta):
 			#spawn_enemies = wave1_enemies MOVE THIS TO BREAK 3 EXPIRING
 			break_timer_text.text = "Enemies Left: " + str(enemy_count)
 			enemy_base_speed = 60 + 5 * day
-			enemy_base_health = 100 + 5 * day
+			enemy_base_health = 100 + 10 * day
 			move_water(new_day_shore, wave1_line, wave1_limit, new_day_water, wave1_water, delta)
 			if(enemy_count == 0):
 				spawn_timer.stop()
@@ -97,9 +106,9 @@ func _physics_process(delta):
 				upgrade_timer.start()
 				t = 0
 		"wave_2":
-			enemy_base_health = 100 + 10 * day
+			enemy_base_health = 100 + 15 * day
 			spawn_timer.wait_time = 2.5 - 0.5 * day
-			enemy_base_speed = 70 + 5 * day
+			enemy_base_speed = 70 + 7.5 * day
 			break_timer_text.text = "Enemies Left: " + str(enemy_count)
 			move_water(break_line, wave2_line, wave2_limit, break_water, wave2_water, delta)
 			if(enemy_count == 0):
@@ -134,6 +143,7 @@ func _physics_process(delta):
 				wave = "break_3"
 				t = 0
 				day += 1
+				player.levelup_sound.play()
 			pass
 		"break_3":
 			move_water(wave3_line, new_day_water, new_day_shore, wave3_water, new_day_water, delta)
@@ -169,11 +179,11 @@ func _on_spawn_timer_timeout():
 		enemy.damage_mult = 2.5 * damage_ups
 
 func upgrades():
-	var upgrades = ["attack_speed", "heal", "attack_damage", "speed", "dash_timer", "rocket_timer"]
+	var upgrades = ["attack_speed", "attack_damage", "speed", "heal", "rocket_timer","dash_timer"]
 	var rand : int
 	var pos : int
 	if(day == 0):
-		rand = randi() % 4
+		rand = randi() % 3
 	elif(day == 1):
 		rand = randi() % 5
 	elif(day >= 2):

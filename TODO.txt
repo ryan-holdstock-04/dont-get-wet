@@ -1,8 +1,0 @@
-TODO:
-add waves:
-  unlock a new ability each day, starting with only shoot (LMB)
-add jellyfish wave 2
-add boss wave 3
-text lerp into scene
-sfx
-enemy death explosion

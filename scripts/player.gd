@@ -57,6 +57,7 @@ func _input(event):
 		missile.position = get_global_mouse_position()
 
 func _physics_process(delta: float) -> void:
+	
 	if(player_hit):
 		if !hiss_played:
 			$hiss_sound.play()
