@@ -100,7 +100,7 @@ func _on_body_entered(body):
 	
 	# enemy colliding with player
 	if(groups[0] == "player"):
-		body.health -= 0
+		body.health -= 10
 		body.hurt_anim.play("hit")
 		bounce_timer.start()
 		invert = -5
